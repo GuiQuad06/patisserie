@@ -1,0 +1,98 @@
+// recette.h
+// SPDX-FileCopyrightText: 2024 GuiQuad06 guillaume.cuadrado@gmail.com
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+#ifndef RECETTE_H
+#define RECETTE_H
+
+#include <fstream>
+#include <iostream>
+#include <limits>
+#include <map>
+#include <string>
+
+// This define allows to bufferize the newline char to let the user answer the questions
+#define IGNORE_NEWLINE    (std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'))
+
+/*
+ * Enum to identify recipes categories
+ */
+typedef enum {
+    kPATE,
+    kCREME,
+    kBISCUIT,
+    kMOUSSE,
+    kGLACAGE
+} e_category_t;
+
+/**
+ * Recette class will handle recipe objects which will contain a map of ingredients
+ */
+class Recette
+{
+public:
+    /**
+     * Default constructor
+     * It is a CLI to let the user tell about the Recette
+     * and fill the members accordingly
+     */
+    Recette();
+
+    /*
+     * Constructor with arguments :
+     * cat is the category of the recipes
+     * name is the name of the recipe we want to give in the database
+     */
+    Recette(e_category_t cat, std::string name);
+
+    /**
+     * Copy constructor
+     *
+     * @param other (the object we want to use for the copy)
+     */
+    Recette(const Recette& other);
+
+    /**
+     * Destructor
+     */
+    ~Recette();
+
+    /**
+     * Assignment operator
+     *
+     * @param other (the object we want to use for the assignment)
+     * @return a reference to a Recette object we will assign
+     */
+    Recette& operator=(const Recette& other);
+
+    /**
+     * Category Interpreter
+     * This method convert the category constant enum
+     * to a string in order to send it in a file
+     * @return a string
+     */
+    std::string category_interpreter();
+
+    /**
+     * Display Recette
+     * This method display within cout all the members of the object Recette
+     */
+    void display_recette();
+
+    /**
+     * Save Recette
+     * This method save information in a recipe database
+     * (a text file for instance)
+     * @param my_file (a reference to the file handler)
+     */
+    void save_recette(std::ofstream &my_file);
+
+protected:
+
+    e_category_t m_category;
+    std::string m_name;
+    std::map<std::string,uint16_t> m_ingredient;
+
+};
+
+#endif // RECETTE_H
