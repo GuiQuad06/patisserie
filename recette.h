@@ -26,7 +26,7 @@ typedef enum {
 } e_category_t;
 
 /**
- * Recette class will handle recipe objects which will contain a map of ingredients
+ * Recette class will handle recipe objects which will contains a map of ingredients
  */
 class Recette
 {
