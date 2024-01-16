@@ -4,22 +4,6 @@
 
 #include "recette.h"
 
-/**
-* Remove the trailing spaces
-*
-* @param input (reference to a standard string)
-* @return a reference to a standard string (without trailing spaces)
-*/
-static std::string& remove_trailing_spaces(std::string& input)
-{
-    size_t pos = input.find_last_not_of(' ');
-    if (pos != std::string::npos)
-        input.erase(pos + 1);
-    else
-        input.clear();  // input is all spaces
-    return input;
-}
-
 Recette::Recette()
 {
     char cat, response;
@@ -30,7 +14,7 @@ Recette::Recette()
     std::cout << "What's the category of the recipe you want to store ?:\n";
     std::cout << "\t-0 if PATE\n\t-1 if CREME\n\t-2 if BISCUIT\n\t-3 if MOUSSE\n\t-4 if GLACAGE\n";
     std::cin >> cat;
-    IGNORE_NEWLINE;
+    std::cin.ignore();
 
     switch (cat) {
     case '0':
@@ -72,13 +56,13 @@ Recette::Recette()
 
         std::cout << "What will be the quantity of the ingredient ?\n";
         std::cin >> qty;
-        IGNORE_NEWLINE;
+        std::cin.ignore();
 
         m_ingredient.insert({tmp_str, qty});
 
         std::cout << "Would you like to store another Ingredient ? (Y/n)\n";
         std::cin >> response;
-        IGNORE_NEWLINE;
+        std::cin.ignore();
 
     } while(response == 'y' || response == 'Y');
 }

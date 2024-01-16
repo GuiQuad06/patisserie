@@ -4,22 +4,6 @@
 
 #include "patisserie.h"
 
-/**
-* Remove the trailing spaces
-*
-* @param input (reference to a standard string)
-* @return a reference to a standard string (without trailing spaces)
-*/
-static std::string& remove_trailing_spaces(std::string& input)
-{
-    size_t pos = input.find_last_not_of(' ');
-    if (pos != std::string::npos)
-        input.erase(pos + 1);
-    else
-        input.clear();  // input is all spaces
-    return input;
-}
-
 Patisserie::Patisserie()
 {
     char cat, response;
@@ -30,7 +14,7 @@ Patisserie::Patisserie()
     std::cout << "What's the category of the pastry you want to store ?:\n";
     std::cout << "\t-0 if TARTE\n\t-1 if ENTREMET\n\t-2 if TRADI\n";
     std::cin >> cat;
-    IGNORE_NEWLINE;
+    std::cin.ignore();
 
     switch (cat) {
     case '0':
@@ -55,7 +39,7 @@ Patisserie::Patisserie()
     // Getting the people number
     std::cout << "For how many pepole the pastry is made for ?\n";
     std::cin >> m_pax;
-    IGNORE_NEWLINE;
+    std::cin.ignore();
 
     // Create an empty map
     // Key is a pointer to Recette, Value is a uint16...
@@ -71,13 +55,13 @@ Patisserie::Patisserie()
 
         std::cout << "What will be the quantity of the recipe ?\n";
         std::cin >> qty;
-        IGNORE_NEWLINE;
+        std::cin.ignore();
 
         // TODO insert the element in the map
 
         std::cout << "Would you like to store another Recipe ? (Y/n)\n";
         std::cin >> response;
-        IGNORE_NEWLINE;
+        std::cin.ignore();
 
     } while(response == 'y' || response == 'Y');
 }

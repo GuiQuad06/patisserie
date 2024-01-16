@@ -7,12 +7,10 @@
 
 #include <fstream>
 #include <iostream>
-#include <limits>
 #include <map>
 #include <string>
 
-// This define allows to bufferize the newline char to let the user answer the questions
-#define IGNORE_NEWLINE    (std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'))
+#include "utility.h"
 
 /*
  * Enum to identify recipes categories
