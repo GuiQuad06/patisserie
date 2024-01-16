@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
 
     // Without passing argument to the exe the database path is the origin worktree
     if (argc == 1)
-        path_to_file = "../recettes.txt";
+        path_to_file = "../";
     else if (argc == 2)
         path_to_file = argv[1];
     else {
@@ -27,8 +27,9 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    //**** TESTCASE 1: Filling the recette database ****//
     // Open the file in append mode
-    std::ofstream recettes_database(path_to_file, std::ios::out | std::ios::app);
+    std::ofstream recettes_database_w(path_to_file + "recettes.txt", std::ios::out | std::ios::app);
 
     do {
         std::cout << "Recipe Wizard:\n";
@@ -47,11 +48,27 @@ int main(int argc, char **argv) {
         std::cout << "Would you like to store the recipe in a file ? (Y/n)\n";
         std::cin >> response;
         if(response == 'y' || response =='Y') {
-            my_recette->save_recette(recettes_database);
+            my_recette->save_recette(recettes_database_w);
         }
         // Je free tout propre
         delete my_recette;
         my_recette = nullptr;
     }
+    //*****************************************************//
+
+    //**** TESTCASE 2: Filling the patisserie database ****//
+    // Open recette file in read mode
+    std::ifstream recettes_database_r(path_to_file + "recettes.txt", std::ios::in);
+
+    // Static Recette method to parse read only recettes.txt database file
+    // and create a Recette's vector
+    Recette::load_recettes(recettes_database_r, my_recettes);
+
+    // Open patisserie file in append mode
+    std::ofstream patisseries_database_w(path_to_file + "patisseries.txt", std::ios::out | std::ios::app);
+
+
+    //*****************************************************//
+
     return 0;
 }

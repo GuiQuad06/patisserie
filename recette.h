@@ -8,7 +8,9 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
+#include <vector>
 
 #include "utility.h"
 
@@ -84,6 +86,23 @@ public:
      * @param my_file (a reference to the file handler)
      */
     void save_recette(std::ofstream &my_file);
+
+    /**
+     * Load Recettes
+     * This static method load information from a recipe database
+     * (a text file for instance)
+     * @param my_file (a reference to the file handler)
+     * @param recettes (a reference to the recettes vector)
+     */
+    static void load_recettes(std::ifstream &my_file, std::vector<Recette*> &recettes);
+
+    /**
+     * Category Converter
+     * This method convert the string from database
+     * to a constant enum
+     * @return a e_category_t category recipe
+     */
+    static e_category_t category_converter(std::string str);
 
 protected:
 

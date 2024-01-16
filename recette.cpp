@@ -121,14 +121,72 @@ void Recette::save_recette(std::ofstream& my_file)
     std::map<std::string,uint16_t>::const_iterator it_map;
     std::string cat = category_interpreter();
 
-    if(my_file) {
+    if(!my_file) {
+        std::cerr << "Impossible d'ouvrir le fichier\n";
+        return;
+    }
+    else {
         my_file << "# " + cat + ":\n";
         my_file << "## " + m_name + ":\n";
         for(it_map = m_ingredient.begin(); it_map != m_ingredient.end(); ++it_map) {
             my_file << "### " << it_map->first << ';' << it_map->second << "\n";
         }
+        my_file << "####\n"; // End Of Recette
+    }
+}
+
+void Recette::load_recettes(std::ifstream& my_file, std::vector<Recette*> &recettes)
+{
+    if(!my_file) {
+        std::cerr << "Impossible d'ouvrir le fichier\n";
+        return;
     }
     else {
-        std::cout << "Impossible d'ouvrir le fichier\n";
+        std::string current_line;
+        Recette current_recipe(kPATE, "toto");
+
+        while (std::getline(my_file, current_line)) {
+            if (current_line.empty()) {
+                continue; // Skip empty lines
+            }
+            // End of Recette
+            if (!current_line.compare(0, 5, "####")) {
+                recettes.push_back(new Recette(current_recipe));
+            }
+            // Ingredient map insert
+            else if (!current_line.compare(0, 4, "### ")) {
+                // Extract ingredient and quantity
+                size_t len = current_line.size() - 4;
+                std::istringstream iss(current_line.substr(4, len));
+                std::string ingredient, quantity_str;
+                int quantity;
+                char delimiter = ';';
+
+                if (std::getline(iss, ingredient, delimiter) && std::getline(iss, quantity_str)) {
+                    quantity = std::stoi(quantity_str);
+                    current_recipe.m_ingredient.insert({ingredient, quantity});
+                }
+            }
+            // Name of Recipe
+            else if (!current_line.compare(0, 3, "## ")) {
+                size_t len = current_line.size() - 3;
+                std::string::size_type end = current_line.rfind(':');
+                current_recipe.m_name = current_line.substr(3, end-3);
+            }
+            // Category of Recipe
+            else if (!current_line.compare(0, 2, "# ")) {
+                size_t len = current_line.size() - 2;
+                std::string::size_type end = current_line.rfind(':');
+                current_recipe.m_category = Recette::category_converter(current_line.substr(2, end-2));
+            }
+        }
     }
+}
+
+e_category_t Recette::category_converter(std::string str)
+{
+    return str == "PATE" ? kPATE :
+        str == "CREME" ? kCREME :
+        str == "BISCUIT" ? kBISCUIT :
+        str == "MOUSSE" ? kMOUSSE : kGLACAGE;
 }
