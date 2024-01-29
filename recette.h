@@ -118,6 +118,15 @@ public:
      */
     bool operator<(const Recette& other) const;
 
+    /**
+     * Operator << non-member overloading function
+     * This is used to print a Recette object within its map
+     * @param os output stream
+     * @param recette const reference to a Recette object 
+     * @return output stream (e.g std::cout)
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Recette& recette);
+
 protected:
 
     e_category_t m_category;

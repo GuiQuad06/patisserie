@@ -133,8 +133,7 @@ void Patisserie::display_patisserie()
     std::cout << "Category : " << cat << "\nName :" << m_name << "\nNb de pax:" << m_pax << '\n';
 
     for(it_map = m_recette.begin(); it_map != m_recette.end(); ++it_map) {
-        // TODO : Implement operator<< in Recette
-        //std::cout << "\tKey:" << it_map->first << "\tValue:" << it_map->second << '\n';
+        std::cout << "\tKey:" << it_map->first << "\tValue:" << it_map->second << '\n';
     }
 }
 
@@ -150,8 +149,7 @@ void Patisserie::save_patisserie(std::ofstream& my_file)
         my_file << "# " + cat + ":\n";
         my_file << "## " + m_name << ';' << m_pax << ":\n";
         for(it_map = m_recette.begin(); it_map != m_recette.end(); ++it_map) {
-            // TODO : Implement operator<< in Recette
-            //my_file << "### " << it_map->first << ';' << it_map->second << "\n";
+            my_file << "### " << it_map->first << ';' << it_map->second << "\n";
         }
         my_file << "####\n"; // End Of Patisserie
     }

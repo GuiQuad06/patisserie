@@ -200,3 +200,10 @@ bool Recette::operator<(const Recette& other) const
 {
     return (m_name < other.m_name);
 }
+
+std::ostream& operator<<(std::ostream& os, const Recette& recette)
+{
+    // Stream the m_name member to the output stream
+    os << recette.m_name;
+    return os;
+}
