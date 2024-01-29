@@ -116,6 +116,11 @@ void Recette::display_recette()
     }
 }
 
+std::string Recette::get_recette_name()
+{
+    return m_name; 
+}
+
 void Recette::save_recette(std::ofstream& my_file)
 {
     std::map<std::string,uint16_t>::const_iterator it_map;

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "recette.h"
 #include "utility.h"
@@ -33,7 +34,7 @@ public:
      * It is a CLI to let the user tell about the Patisserie
      * and fill the members accordingly
      */
-    Patisserie();
+    Patisserie(std::vector<Recette *> &recettes);
 
     /*
      * Constructor with arguments :
@@ -88,7 +89,7 @@ protected:
     e_pastry_type_t m_type;
     std::string m_name;
     unsigned int m_pax;
-    std::map<Recette*,uint16_t> m_recette;
+    std::map<Recette,uint16_t> m_recette;
 
 };
 

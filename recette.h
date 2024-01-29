@@ -80,6 +80,12 @@ public:
     void display_recette();
 
     /**
+     * Recette name getter
+     * This method get the name of the recipe
+     */
+    std::string get_recette_name();
+
+    /**
      * Save Recette
      * This method save information in a recipe database
      * (a text file for instance)
