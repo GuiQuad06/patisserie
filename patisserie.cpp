@@ -44,6 +44,7 @@ Patisserie::Patisserie(std::vector<Recette *> &recettes)
     // Create an empty map
     // Key is a pointer to Recette, Value is a uint16...
     m_recette = std::map<Recette,uint16_t>();
+    Recette* matching_recette = nullptr;
 
     do {
         std::cout << "Patry Wizard !\n";
@@ -64,7 +65,6 @@ Patisserie::Patisserie(std::vector<Recette *> &recettes)
         std::cin.ignore();
 
         // Find the corresponding object
-        Recette* matching_recette = nullptr;
         for (const auto& recette : recettes) {
             if (recette->get_recette_name() == tmp_str) {
                 matching_recette = recette;
@@ -87,6 +87,8 @@ Patisserie::Patisserie(std::vector<Recette *> &recettes)
         std::cin.ignore();
 
     } while(response == 'y' || response == 'Y');
+
+    matching_recette = nullptr;
 }
 
 Patisserie::Patisserie(e_pastry_type_t cat, std::string name, unsigned int pax) : m_type(cat), m_name(name), m_pax(pax)
@@ -103,7 +105,7 @@ Patisserie::Patisserie(const Patisserie& other) : m_type(other.m_type), m_name(o
 
 Patisserie::~Patisserie()
 {
-    //TODO ???
+    // Map instance m_recette from std lib is freed by the lib...
 }
 
 Patisserie& Patisserie::operator=(const Patisserie& other)
