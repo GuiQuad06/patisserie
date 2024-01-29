@@ -195,3 +195,8 @@ e_category_t Recette::category_converter(std::string str)
         str == "BISCUIT" ? kBISCUIT :
         str == "MOUSSE" ? kMOUSSE : kGLACAGE;
 }
+
+bool Recette::operator<(const Recette& other) const
+{
+    return (m_name < other.m_name);
+}

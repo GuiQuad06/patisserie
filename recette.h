@@ -110,6 +110,14 @@ public:
      */
     static e_category_t category_converter(std::string str);
 
+    /**
+     * Operator < overloading for map sorting
+     * This method use key alphabetical order 
+     * @param 
+     * @return bool : true if object.m_name < other.m_name
+     */
+    bool operator<(const Recette& other) const;
+
 protected:
 
     e_category_t m_category;

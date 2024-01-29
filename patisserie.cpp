@@ -9,7 +9,6 @@ Patisserie::Patisserie(std::vector<Recette *> &recettes)
     char cat, response;
     uint16_t qty;
     std::string tmp_str;
-    Recette recette_tmp(kPATE, "toto");
 
     // Getting the pastry's category
     std::cout << "What's the category of the pastry you want to store ?:\n";
@@ -64,9 +63,24 @@ Patisserie::Patisserie(std::vector<Recette *> &recettes)
         std::cin >> qty;
         std::cin.ignore();
 
-        //Insert the element in the map
-        // TODO : implement operator< in Recette
-        //m_recette.insert({recette_tmp, qty});
+        // Find the corresponding object
+        Recette* matching_recette = nullptr;
+        for (const auto& recette : recettes) {
+            if (recette->get_recette_name() == tmp_str) {
+                matching_recette = recette;
+                break;
+            }
+        }
+
+        if (matching_recette) {
+            Recette recette_tmp(*matching_recette);
+
+            //Insert the element in the map
+            m_recette.insert({recette_tmp, qty});
+
+        } else {
+            std::cout << "Recette not found!\n";
+        }
 
         std::cout << "Would you like to store another Recipe ? (Y/n)\n";
         std::cin >> response;
@@ -83,7 +97,7 @@ Patisserie::Patisserie(e_pastry_type_t cat, std::string name, unsigned int pax) 
 Patisserie::Patisserie(const Patisserie& other) : m_type(other.m_type), m_name(other.m_name),  m_pax(other.m_pax)
 {
     for (auto it = other.m_recette.begin(); it != other.m_recette.end(); ++it) {
-        //m_recette[it->first] = it->second;
+        m_recette[it->first] = it->second;
     }
 }
 
@@ -99,7 +113,7 @@ Patisserie& Patisserie::operator=(const Patisserie& other)
         m_type = other.m_type;
         m_pax = other.m_pax;
         for (auto it = other.m_recette.begin(); it != other.m_recette.end(); ++it) {
-            //m_recette[it->first] = it->second;
+            m_recette[it->first] = it->second;
         }
     }
     return *this;
