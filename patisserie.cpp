@@ -161,3 +161,10 @@ void Patisserie::save_patisserie(std::ofstream& my_file)
         my_file << "####\n"; // End Of Patisserie
     }
 }
+
+std::ostream& operator<<(std::ostream& os, const Patisserie& patisserie)
+{
+    // Stream the m_name member to the output stream
+    os << patisserie.m_name;
+    return os;
+}

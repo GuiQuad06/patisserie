@@ -91,6 +91,15 @@ public:
      */
     void save_patisserie(std::ofstream &my_file);
 
+    /**
+     * Operator << non-member overloading function
+     * This is used to print a Patisserie object within its map
+     * @param os output stream
+     * @param patisserie const reference to a Patisserie object 
+     * @return output stream (e.g std::cout)
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Patisserie& patisserie);
+
 protected:
     e_pastry_type_t m_type;
     std::string m_name;
