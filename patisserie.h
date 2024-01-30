@@ -92,6 +92,14 @@ public:
     void save_patisserie(std::ofstream &my_file);
 
     /**
+     * Operator < overloading for map sorting
+     * This method use key alphabetical order 
+     * @param 
+     * @return bool : true if object.m_name < other.m_name
+     */
+    bool operator<(const Patisserie& other) const;
+
+    /**
      * Operator << non-member overloading function
      * This is used to print a Patisserie object within its map
      * @param os output stream

@@ -162,6 +162,11 @@ void Patisserie::save_patisserie(std::ofstream& my_file)
     }
 }
 
+bool Patisserie::operator<(const Patisserie& other) const
+{
+    return (m_name < other.m_name);
+}
+
 std::ostream& operator<<(std::ostream& os, const Patisserie& patisserie)
 {
     // Stream the m_name member to the output stream
