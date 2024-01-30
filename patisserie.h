@@ -92,6 +92,14 @@ public:
     void save_patisserie(std::ofstream &my_file);
 
     /**
+     * Type Converter
+     * This method convert the string from database
+     * to a constant enum
+     * @return e_pastry_type_t type pastry
+     */
+    static e_pastry_type_t type_converter(std::string str);
+
+    /**
      * Operator < overloading for map sorting
      * This method use key alphabetical order 
      * @param 

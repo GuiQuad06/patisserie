@@ -162,6 +162,71 @@ void Patisserie::save_patisserie(std::ofstream& my_file)
     }
 }
 
+void Patisserie::load_patisseries(std::ifstream &my_file, std::vector<Patisserie*> &patisseries, std::vector<Recette*> &recettes)
+{
+    if(!my_file) {
+        std::cerr << "Impossible d'ouvrir le fichier\n";
+        return;
+    }
+    else {
+        std::string current_line;
+        Patisserie current_pastry(kTARTE, "tata", 6u);
+
+        while (std::getline(my_file, current_line)) {
+            if (current_line.empty()) {
+                continue; // Skip empty lines
+            }
+            // End of Patisserie
+            if (!current_line.compare(0, 5, "####")) {
+                patisseries.push_back(new Patisserie(current_pastry));
+            }
+            // Recette map insert
+            else if (!current_line.compare(0, 4, "### ")) {
+                // Extract recette and quantity
+                size_t len = current_line.size() - 4;
+                std::istringstream iss(current_line.substr(4, len));
+                std::string recette_str, quantity_str;
+                Recette* matching_recette = nullptr;
+                int quantity;
+                char delimiter = ';';
+
+                if (std::getline(iss, recette_str, delimiter) && std::getline(iss, quantity_str)) {
+                    quantity = std::stoi(quantity_str);
+                    // Lookup for Recette object corresponding to the std::string recette
+                    for (const auto& recette : recettes) {
+                        if (recette->get_recette_name() == recette_str) {
+                            matching_recette = recette;
+                            break;
+                        }
+                    }
+                    if (matching_recette) {
+                        Recette recette_tmp(*matching_recette);
+                        current_pastry.m_recette.insert({recette_tmp, quantity});
+                    }
+                }
+            }
+            // Name of Pastry
+            else if (!current_line.compare(0, 3, "## ")) {
+                size_t len = current_line.size() - 3;
+                std::string::size_type end = current_line.rfind(':');
+                current_pastry.m_name = current_line.substr(3, end-3);
+            }
+            // Type of Pastry
+            else if (!current_line.compare(0, 2, "# ")) {
+                size_t len = current_line.size() - 2;
+                std::string::size_type end = current_line.rfind(':');
+                current_pastry.m_type = Patisserie::type_converter(current_line.substr(2, end-2));
+            }
+        }
+    }
+}
+
+e_pastry_type_t Patisserie::type_converter(std::string str)
+{
+    return str == "TARTE" ? kTARTE :
+        str == "ENTREMET" ? kENTREMET : kTRADI;
+}
+
 bool Patisserie::operator<(const Patisserie& other) const
 {
     return (m_name < other.m_name);
