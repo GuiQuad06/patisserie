@@ -208,8 +208,14 @@ void Patisserie::load_patisseries(std::ifstream &my_file, std::vector<Patisserie
             // Name of Pastry
             else if (!current_line.compare(0, 3, "## ")) {
                 size_t len = current_line.size() - 3;
-                std::string::size_type end = current_line.rfind(':');
-                current_pastry.m_name = current_line.substr(3, end-3);
+                std::istringstream iss(current_line.substr(3, len));
+                std::string name_str, pax_str;
+                char delimiter = ';';
+
+                if (std::getline(iss, name_str, delimiter) && std::getline(iss, pax_str)) {
+                    current_pastry.m_pax = stoi(pax_str); 
+                    current_pastry.m_name = name_str;
+                }
             }
             // Type of Pastry
             else if (!current_line.compare(0, 2, "# ")) {

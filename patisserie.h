@@ -92,6 +92,16 @@ public:
     void save_patisserie(std::ofstream &my_file);
 
     /**
+     * Load Patisserie
+     * This static method load information from a pastry database
+     * (a text file for instance)
+     * @param my_file (a reference to the file handler)
+     * @param patisserie (a reference to Patisserie vector)
+     * @param recette (a reference to Recette vector)
+     */
+    static void load_patisseries(std::ifstream &my_file, std::vector<Patisserie*> &patisserie, std::vector<Recette*> &recette);
+
+    /**
      * Type Converter
      * This method convert the string from database
      * to a constant enum
