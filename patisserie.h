@@ -78,6 +78,12 @@ public:
     void display_patisserie();
 
     /**
+     * Patisserie name getter
+     * This method get the name of the recipe
+     */
+    std::string get_patisserie_name();
+
+    /**
      * Save Patisserie
      * This method save information in a pastry database
      * (a text file for instance)

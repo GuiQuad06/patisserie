@@ -139,6 +139,11 @@ void Patisserie::display_patisserie()
     }
 }
 
+std::string Patisserie::get_patisserie_name()
+{
+    return m_name; 
+}
+
 void Patisserie::save_patisserie(std::ofstream& my_file)
 {
     std::map<Recette,uint16_t>::const_iterator it_map;
