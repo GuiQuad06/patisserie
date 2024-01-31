@@ -3,8 +3,9 @@
 #include <memory>
 #include <vector>
 
-#include "recette.h"
+#include "commande.h"
 #include "patisserie.h"
+#include "recette.h"
 
 /*
  * The purpose of this program is to PoC Pastry and Recipes Classes,
@@ -15,6 +16,7 @@ int main(int argc, char **argv) {
     std::string path_to_file;
     std::vector<Recette*> my_recettes;
     std::vector<Patisserie*> my_patisseries;
+    std::vector<Commande*> my_commandes;
     char response;
 
     std::cout << "Hello, world!\n" ;
@@ -41,7 +43,28 @@ int main(int argc, char **argv) {
     // and create a Patisserie's vector
     Patisserie::load_patisseries(patisseries_database_r, my_patisseries, my_recettes);
 
-    // Recette objects retrospective
+    // Open commande file in write mode
+    std::ofstream commandes_database_w(path_to_file + "commandes.txt", std::ios::out | std::ios::app);
+
+    // CLI Handler Loop
+    do {
+        std::cout << "Formulaire de Commande:\n";
+
+        my_commandes.push_back(new Commande(my_patisseries));
+
+        std::cout << "Would you like to store another order ? (Y/n)\n";
+        std::cin >> response;
+        std::cin.ignore();
+
+    } while(response == 'y' || response == 'Y');
+
+    // Commande objects retrospective
+    for (auto my_commande : my_commandes) {
+        my_commande->display_commande();
+        // Je free tout propre
+        delete my_commande;
+        my_commande = nullptr;
+    }
     for (auto my_patisserie : my_patisseries) {
         my_patisserie->display_patisserie();
         // Je free tout propre
