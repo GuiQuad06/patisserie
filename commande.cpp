@@ -127,6 +127,23 @@ void Commande::display_commande(void)
     }
 }
 
+void Commande::save_commande(std::ofstream &my_file)
+{
+    std::map<Patisserie,uint16_t>::const_iterator it_map;
+
+    if(!my_file) {
+        std::cerr << "Impossible d'ouvrir le fichier\n";
+    }
+    else {
+        my_file << "# " << m_command_id << ":\n";
+        my_file << "## " << m_nom_client << ";" << m_tot_pax << ":\n";
+        for(it_map = m_patisserie.begin(); it_map != m_patisserie.end(); ++it_map) {
+            my_file << "### " << it_map->first << ';' << it_map->second << "\n";
+        }
+        my_file << "####\n"; // End Of Commande
+    }
+}
+
 int16_t Commande::remaining_pax(uint16_t acc)
 {
     if(acc > m_tot_pax) {

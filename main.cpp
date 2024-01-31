@@ -61,6 +61,13 @@ int main(int argc, char **argv) {
     // Commande objects retrospective
     for (auto my_commande : my_commandes) {
         my_commande->display_commande();
+
+        // J'enregistre eventuellement ds un file
+        std::cout << "Would you like to store the command in a file ? (Y/n)\n";
+        std::cin >> response;
+        if(response == 'y' || response =='Y')
+            my_commande->save_commande(commandes_database_w);
+        
         // Je free tout propre
         delete my_commande;
         my_commande = nullptr;

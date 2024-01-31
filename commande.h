@@ -57,6 +57,14 @@ public:
     void display_commande();
 
     /**
+     * Save Commande
+     * This method save information in a commande database
+     * (a text file for instance)
+     * @param my_file (a reference to the file handler)
+     */
+    void save_commande(std::ofstream &my_file);
+
+    /**
      * Provide verification on people number
      * @param acc this is the pastries nb of people sum
      * @return unsigned int nb of remaining pax
