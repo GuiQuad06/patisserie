@@ -103,6 +103,12 @@ public:
     static void load_recettes(std::ifstream &my_file, std::vector<Recette*> &recettes);
 
     /**
+     * Clean Recette's ingredients
+     * This method can clean all the ingredient's maps contained in a Recette
+     */
+    void clean_ingredients(void);
+
+    /**
      * Category Converter
      * This method convert the string from database
      * to a constant enum

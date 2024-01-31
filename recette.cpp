@@ -157,6 +157,8 @@ void Recette::load_recettes(std::ifstream& my_file, std::vector<Recette*> &recet
             // End of Recette
             if (!current_line.compare(0, 5, "####")) {
                 recettes.push_back(new Recette(current_recipe));
+                //Clear the map
+                current_recipe.clean_ingredients();
             }
             // Ingredient map insert
             else if (!current_line.compare(0, 4, "### ")) {
@@ -186,6 +188,11 @@ void Recette::load_recettes(std::ifstream& my_file, std::vector<Recette*> &recet
             }
         }
     }
+}
+
+void Recette::clean_ingredients(void)
+{
+    m_ingredient.clear();
 }
 
 e_category_t Recette::category_converter(std::string str)
