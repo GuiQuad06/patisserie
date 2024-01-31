@@ -29,42 +29,28 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    //**** TESTCASE 2: Filling the patisserie database ****//
     // Open recette file in read mode
     std::ifstream recettes_database_r(path_to_file + "recettes.txt", std::ios::in);
     // Static Recette method to parse read only recettes.txt database file
     // and create a Recette's vector
     Recette::load_recettes(recettes_database_r, my_recettes);
 
-    // Open patisserie file in append mode
-    std::ofstream patisseries_database_w(path_to_file + "patisseries.txt", std::ios::out | std::ios::app);
-
-    do {
-        std::cout << "Patisserie Wizard:\n";
-
-        my_patisseries.push_back(new Patisserie(my_recettes));
-
-        std::cout << "Would you like to store another pastry ? (Y/n)\n";
-        std::cin >> response;
-
-    } while(response == 'y' || response == 'Y');
+    // Open patisserie file in read mode
+    std::ifstream patisseries_database_r(path_to_file + "patisseries.txt", std::ios::in);
+    // Static Patisserie method to parse read only patisseries.txt database file
+    // and create a Patisserie's vector
+    Patisserie::load_patisseries(patisseries_database_r, my_patisseries, my_recettes);
 
     // Recette objects retrospective
     for (auto my_patisserie : my_patisseries) {
-        // J'affiche le contenu de mon vecteur
         my_patisserie->display_patisserie();
-        // J'enregistre eventuellement ds un file
-        std::cout << "Would you like to store the recipe in a file ? (Y/n)\n";
-        std::cin >> response;
-        if(response == 'y' || response =='Y') {
-            my_patisserie->save_patisserie(patisseries_database_w);
-        }
         // Je free tout propre
         delete my_patisserie;
         my_patisserie = nullptr;
     }
     // Recette objects retrospective
     for (auto my_recette : my_recettes) {
+        my_recette->display_recette();
         // Je free tout propre
         delete my_recette;
         my_recette= nullptr;
