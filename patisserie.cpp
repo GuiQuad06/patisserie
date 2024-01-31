@@ -179,6 +179,8 @@ void Patisserie::load_patisseries(std::ifstream &my_file, std::vector<Patisserie
             // End of Patisserie
             if (!current_line.compare(0, 5, "####")) {
                 patisseries.push_back(new Patisserie(current_pastry));
+                // Clean the map
+                current_pastry.clean_recettes();
             }
             // Recette map insert
             else if (!current_line.compare(0, 4, "### ")) {
@@ -225,6 +227,11 @@ void Patisserie::load_patisseries(std::ifstream &my_file, std::vector<Patisserie
             }
         }
     }
+}
+
+void Patisserie::clean_recettes(void)
+{
+    m_recette.clear();
 }
 
 e_pastry_type_t Patisserie::type_converter(std::string str)

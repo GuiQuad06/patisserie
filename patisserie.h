@@ -102,6 +102,12 @@ public:
     static void load_patisseries(std::ifstream &my_file, std::vector<Patisserie*> &patisserie, std::vector<Recette*> &recette);
 
     /**
+     * Clean Patisserie's recettes
+     * This method can clean all the recette's maps contained in a Patisserie
+     */
+    void clean_recettes();
+
+    /**
      * Type Converter
      * This method convert the string from database
      * to a constant enum
