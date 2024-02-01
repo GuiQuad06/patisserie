@@ -144,6 +144,74 @@ void Commande::save_commande(std::ofstream &my_file)
     }
 }
 
+void Commande::load_commandes(std::ifstream &my_file, std::vector<Commande*> &commandes, std::vector<Patisserie*> &patisseries)
+{
+    if(!my_file) {
+        std::cerr << "Impossible d'ouvrir le fichier\n";
+        return;
+    }
+    else {
+        std::string current_line;
+        Commande current_commande("foo", 10u);
+
+        while (std::getline(my_file, current_line)) {
+            if (current_line.empty()) {
+                continue; // Skip empty lines
+            }
+            // End of Commande
+            if (!current_line.compare(0, 5, "####")) {
+                commandes.push_back(new Commande(current_commande));
+                // Clean the map
+                current_commande.clean_patisseries();
+                Commande::count++;
+            }
+            // Patisserie map insert
+            else if (!current_line.compare(0, 4, "### ")) {
+                // Extract recette and quantity
+                size_t len = current_line.size() - 4;
+                std::istringstream iss(current_line.substr(4, len));
+                std::string pastry_str, pax_str;
+                Patisserie* matching_patisserie = nullptr;
+                int pax;
+                char delimiter = ';';
+
+                if (std::getline(iss, pastry_str, delimiter) && std::getline(iss, pax_str)) {
+                    pax = std::stoi(pax_str);
+                    // Lookup for Patisserie object corresponding to the std::string patisserie
+                    for (const auto& patisserie : patisseries) {
+                        if (patisserie->get_patisserie_name() == pastry_str) {
+                            matching_patisserie = patisserie;
+                            break;
+                        }
+                    }
+                    if (matching_patisserie) {
+                        Patisserie patisserie_tmp(*matching_patisserie);
+                        current_commande.m_patisserie.insert({patisserie_tmp, pax});
+                    }
+                }
+            }
+            // Name of the consumer + total nb of people
+            else if (!current_line.compare(0, 3, "## ")) {
+                size_t len = current_line.size() - 3;
+                std::istringstream iss(current_line.substr(3, len));
+                std::string name_str, pax_str;
+                char delimiter = ';';
+
+                if (std::getline(iss, name_str, delimiter) && std::getline(iss, pax_str)) {
+                    current_commande.m_tot_pax = stoi(pax_str); 
+                    current_commande.m_nom_client = name_str;
+                }
+            }
+            // Command ID
+            else if (!current_line.compare(0, 2, "# ")) {
+                size_t len = current_line.size() - 2;
+                std::string::size_type end = current_line.rfind(':');
+                current_commande.m_command_id = std::stoi(current_line.substr(2, end-2));
+            }
+        }
+    }
+}
+
 int16_t Commande::remaining_pax(uint16_t acc)
 {
     if(acc > m_tot_pax) {

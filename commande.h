@@ -65,6 +65,16 @@ public:
     void save_commande(std::ofstream &my_file);
 
     /**
+     * Load Commande
+     * This static method load information from a order database
+     * (a text file for instance)
+     * @param my_file a reference to the file handler
+     * @param commande a reference to the Commande vector
+     * @param patisserie a reference to Patisserie vector
+     */
+    static void load_commandes(std::ifstream &my_file, std::vector<Commande*> &commande, std::vector<Patisserie*> &patisserie);
+
+    /**
      * Provide verification on people number
      * @param acc this is the pastries nb of people sum
      * @return unsigned int nb of remaining pax
