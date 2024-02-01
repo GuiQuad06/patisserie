@@ -75,6 +75,12 @@ public:
     static void load_commandes(std::ifstream &my_file, std::vector<Commande*> &commande, std::vector<Patisserie*> &patisserie);
 
     /**
+     * Clean Commande's patisseries
+     * This method can clean all the patisseries's maps contained in a Commande
+     */
+    void clean_patisseries();
+
+    /**
      * Provide verification on people number
      * @param acc this is the pastries nb of people sum
      * @return unsigned int nb of remaining pax

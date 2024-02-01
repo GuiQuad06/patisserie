@@ -212,6 +212,11 @@ void Commande::load_commandes(std::ifstream &my_file, std::vector<Commande*> &co
     }
 }
 
+void Commande::clean_patisseries(void)
+{
+    m_patisserie.clear();
+}
+
 int16_t Commande::remaining_pax(uint16_t acc)
 {
     if(acc > m_tot_pax) {
