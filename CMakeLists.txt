@@ -4,6 +4,7 @@ project(patisserie CXX)
 
 add_executable(patisserie
   commande.cpp
+  commandline_handler.cpp
   main.cpp
   patisserie.cpp
   recette.cpp

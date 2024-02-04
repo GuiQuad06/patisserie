@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "commande.h"
+#include "commandline_handler.h"
 #include "patisserie.h"
 #include "recette.h"
 
