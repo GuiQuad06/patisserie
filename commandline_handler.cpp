@@ -25,7 +25,7 @@ typedef struct {
 commandline_handler_t commandline_handlers[] = {
     {"1", cmd_add_recette, "Add a Recette"},
     {"2", cmd_add_patisserie, "Add a Patisserie"},
-    {"3", nullptr, "Add a Commande"},
+    {"3", cmd_add_commande, "Add a Commande"},
     {"4", nullptr, "Generate a Shopping List"},
     {"5", nullptr, "Remove a Recette"},
     {"6", nullptr, "Remove a Patisserie"},
@@ -44,6 +44,13 @@ void cmd_add_patisserie(database_package_t &data)
     std::cout << "Adding a Patisserie\n";
 
     data.v_patisseries.push_back(new Patisserie(data.v_recettes));
+}
+
+void cmd_add_commande(database_package_t &data)
+{
+    std::cout << "Adding a Commande\n";
+
+    data.v_commandes.push_back(new Commande(data.v_patisseries));
 }
 
 void cli_process(char c, database_package_t &databases)

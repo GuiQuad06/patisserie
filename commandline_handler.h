@@ -43,6 +43,12 @@ void cmd_add_recette(database_package_t &data);
  */
 void cmd_add_patisserie(database_package_t &data);
 
+/**
+ * @brief Add a Commande
+ * @return none
+ */
+void cmd_add_commande(database_package_t &data);
+
 /** 
  * @brief Process the command line
  * @param c the command to process
