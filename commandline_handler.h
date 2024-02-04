@@ -6,7 +6,14 @@
 #define COMMANDLINE_HANDLER_H_
 
 /** Standard Includes */
+#include <iostream>
 #include <stdint.h>
 #include <string>
+
+/** 
+ * @brief Display the different commands
+ * @return none
+ */
+void cli_display(void);
 
 #endif // COMMANDLINE_HANDLER_H_

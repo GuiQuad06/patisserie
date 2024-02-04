@@ -28,3 +28,11 @@ commandline_handler_t commandline_handlers[] = {
     {6, nullptr, "Remove a Patisserie"},
     {7, nullptr, "Remove a Commande"},
     {0, nullptr, ""}};
+
+void cli_display(void)
+{
+    for (int i = 0; commandline_handlers[i].cmd_id != 0; i++)
+    {
+        std::cout << '\t' << commandline_handlers[i].cmd_id << ") " << commandline_handlers[i].cmd_help.c_str() << '\n';
+    }
+}
