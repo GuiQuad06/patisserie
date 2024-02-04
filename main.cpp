@@ -27,10 +27,9 @@ static int load_databases(std::string path,
 int main(int argc, char **argv) {
 
     std::string path_to_file;
-    std::vector<Recette*> my_recettes;
-    std::vector<Patisserie*> my_patisseries;
-    std::vector<Commande*> my_commandes;
     char response;
+
+    database_package_t my_databases;
 
     std::cout << "Salut a toi jeune Patissier!\n\n" ;
 
@@ -68,21 +67,21 @@ int main(int argc, char **argv) {
 
     //*** Show objects contents and free memory ***********//
     // Commande objects retrospective
-    for (auto my_commande : my_commandes) {
+    for (auto my_commande : my_databases.v_commandes) {
         my_commande->display_commande();
         // Je free tout propre
         delete my_commande;
         my_commande = nullptr;
     }
     // Patisseries objects retrospective
-    for (auto my_patisserie : my_patisseries) {
+    for (auto my_patisserie : my_databases.v_patisseries) {
         my_patisserie->display_patisserie();
         // Je free tout propre
         delete my_patisserie;
         my_patisserie = nullptr;
     }
     // Recette objects retrospective
-    for (auto my_recette : my_recettes) {
+    for (auto my_recette : my_databases.v_recettes) {
         my_recette->display_recette();
         // Je free tout propre
         delete my_recette;

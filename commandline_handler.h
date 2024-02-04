@@ -17,6 +17,15 @@
 #include "recette.h"
 
 /** 
+ * @brief Structure to store the 3 vectors databases
+ */
+typedef struct {
+    std::vector<Recette*> v_recettes;
+    std::vector<Patisserie*> v_patisseries;
+    std::vector<Commande*> v_commandes;
+} database_package_t;
+
+/** 
  * @brief Display the different commands
  * @return none
  */
