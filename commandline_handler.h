@@ -37,6 +37,12 @@ void cli_display(void);
  */
 void cmd_add_recette(database_package_t &data);
 
+/**
+ * @brief Add a Patisserie
+ * @return none
+ */
+void cmd_add_patisserie(database_package_t &data);
+
 /** 
  * @brief Process the command line
  * @param c the command to process
