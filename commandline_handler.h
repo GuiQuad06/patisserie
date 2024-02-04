@@ -9,11 +9,31 @@
 #include <iostream>
 #include <stdint.h>
 #include <string>
+#include <vector>
+
+/** User Includes */
+#include "commande.h"
+#include "patisserie.h"
+#include "recette.h"
 
 /** 
  * @brief Display the different commands
  * @return none
  */
 void cli_display(void);
+
+/** 
+ * @brief Add a Recette
+ * @return none
+ */
+void cmd_add_recette(database_package_t &data);
+
+/** 
+ * @brief Process the command line
+ * @param c the command to process
+ * @param databases the databases to process (3 vectors)
+ * @return none
+ */
+void cli_process(char c, database_package_t &databases);
 
 #endif // COMMANDLINE_HANDLER_H_

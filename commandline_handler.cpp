@@ -4,7 +4,10 @@
 
 #include "commandline_handler.h"
 
-typedef void (*commandline_handler)(uint16_t cmd_id);
+/**
+ * @brief Function pointer to handle the command line
+ */
+typedef void (*commandline_handler)(database_package_t &data);
 
 /**
  * @brief Structure to store the command line handlers
@@ -13,21 +16,46 @@ typedef void (*commandline_handler)(uint16_t cmd_id);
  * @memberof cmd_help the help message to display
  */
 typedef struct {
-    uint16_t cmd_id;
+    const char * cmd_id;
     commandline_handler handler_callback;
     std::string cmd_help;
 
 } commandline_handler_t;
 
 commandline_handler_t commandline_handlers[] = {
-    {1, nullptr, "Add a Recette"},
-    {2, nullptr, "Add a Patisserie"},
-    {3, nullptr, "Add a Commande"},
-    {4, nullptr, "Generate a Shopping List"},
-    {5, nullptr, "Remove a Recette"},
-    {6, nullptr, "Remove a Patisserie"},
-    {7, nullptr, "Remove a Commande"},
+    {"1", cmd_add_recette, "Add a Recette"},
+    {"2", nullptr, "Add a Patisserie"},
+    {"3", nullptr, "Add a Commande"},
+    {"4", nullptr, "Generate a Shopping List"},
+    {"5", nullptr, "Remove a Recette"},
+    {"6", nullptr, "Remove a Patisserie"},
+    {"7", nullptr, "Remove a Commande"},
     {0, nullptr, ""}};
+
+void cmd_add_recette(database_package_t &data)
+{
+    std::cout << "Adding a Recette\n";
+
+    data.v_recettes.push_back(new Recette());
+}
+
+void cli_process(char c, database_package_t &databases)
+{
+    for (int i = 0; commandline_handlers[i].cmd_id != 0; i++)
+    {
+        if (c == commandline_handlers[i].cmd_id[0])
+        {
+            if (commandline_handlers[i].handler_callback != nullptr)
+            {
+                commandline_handlers[i].handler_callback(databases);
+            }
+            else
+            {
+                std::cout << "Not implemented yet\n";
+            }
+        }
+    }
+}
 
 void cli_display(void)
 {

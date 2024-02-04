@@ -62,6 +62,8 @@ int main(int argc, char **argv) {
         std::cin >> response;
         std::cin.ignore();
 
+        cli_process(response, my_databases);
+
     } while(!(response == 'q' || response == 'Q'));
 
     //*** Show objects contents and free memory ***********//
