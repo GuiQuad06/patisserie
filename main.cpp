@@ -68,10 +68,19 @@ int main(int argc, char **argv) {
 
     } while(!(response == 'q' || response == 'Q'));
 
+    // Open recette file in write mode
+    std::ofstream recette_database_w(path_to_file + "recettes.txt", std::ios::out);
+    // Open patisserie file in write mode
+    std::ofstream patisserie_database_w(path_to_file + "patisseries.txt", std::ios::out);
+    // Open commande file in write mode
+    std::ofstream commande_database_w(path_to_file + "commandes.txt", std::ios::out);
+
     //*** Show objects contents and free memory ***********//
     // Commande objects retrospective
     for (auto my_commande : my_databases.v_commandes) {
         my_commande->display_commande();
+        // Je sauvegarde la commande dans le fichier
+        my_commande->save_commande(commande_database_w);
         // Je free tout propre
         delete my_commande;
         my_commande = nullptr;
@@ -79,6 +88,8 @@ int main(int argc, char **argv) {
     // Patisseries objects retrospective
     for (auto my_patisserie : my_databases.v_patisseries) {
         my_patisserie->display_patisserie();
+        // Je sauvegarde la patisserie dans le fichier
+        my_patisserie->save_patisserie(patisserie_database_w);
         // Je free tout propre
         delete my_patisserie;
         my_patisserie = nullptr;
@@ -86,6 +97,8 @@ int main(int argc, char **argv) {
     // Recette objects retrospective
     for (auto my_recette : my_databases.v_recettes) {
         my_recette->display_recette();
+        // Je sauvegarde la recette dans le fichier
+        my_recette->save_recette(recette_database_w);
         // Je free tout propre
         delete my_recette;
         my_recette= nullptr;
