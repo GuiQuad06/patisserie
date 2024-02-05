@@ -7,7 +7,7 @@
 /**
  * @brief Function pointer to handle the command line
  */
-typedef void (*commandline_handler)(database_package_t &data);
+typedef int (*commandline_handler)(database_package_t &data);
 
 /**
  * @brief Structure to store the command line handlers
@@ -32,28 +32,52 @@ commandline_handler_t commandline_handlers[] = {
     {"7", nullptr, "Remove a Commande"},
     {0, nullptr, ""}};
 
-void cmd_add_recette(database_package_t &data)
+int cmd_add_recette(database_package_t &data)
 {
     std::cout << "Adding a Recette\n";
 
-    data.v_recettes.push_back(new Recette());
+    Recette *r = new Recette();
+
+    if (r == nullptr)
+    {
+        std::cerr << "Error while creating the Recette\n";
+        return 1;
+    }
+    data.v_recettes.push_back(r);
+    return 0;
 }
 
-void cmd_add_patisserie(database_package_t &data)
+int cmd_add_patisserie(database_package_t &data)
 {
     std::cout << "Adding a Patisserie\n";
 
-    data.v_patisseries.push_back(new Patisserie(data.v_recettes));
+    Patisserie *p = new Patisserie(data.v_recettes);
+
+    if (p == nullptr)
+    {
+        std::cerr << "Error while creating the Patisserie\n";
+        return 1;
+    }
+    data.v_patisseries.push_back(p);
+    return 0;
 }
 
-void cmd_add_commande(database_package_t &data)
+int cmd_add_commande(database_package_t &data)
 {
     std::cout << "Adding a Commande\n";
 
-    data.v_commandes.push_back(new Commande(data.v_patisseries));
+    Commande *c = new Commande(data.v_patisseries);
+
+    if (c == nullptr)
+    {
+        std::cerr << "Error while creating the Commande\n";
+        return 1;
+    }
+    data.v_commandes.push_back(c);
+    return 0;
 }
 
-void cli_process(char c, database_package_t &databases)
+int cli_process(char c, database_package_t &databases)
 {
     for (int i = 0; commandline_handlers[i].cmd_id != 0; i++)
     {
@@ -61,7 +85,10 @@ void cli_process(char c, database_package_t &databases)
         {
             if (commandline_handlers[i].handler_callback != nullptr)
             {
-                commandline_handlers[i].handler_callback(databases);
+                if (commandline_handlers[i].handler_callback(databases)) {
+                    std::cerr << "Error while processing the command\n";
+                    return 1;
+                }
             }
             else
             {
@@ -69,6 +96,7 @@ void cli_process(char c, database_package_t &databases)
             }
         }
     }
+    return 0;
 }
 
 void cli_display(void)

@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
 
     std::string path_to_file;
     char response;
+    int error_status;
 
     database_package_t my_databases;
 
@@ -61,7 +62,9 @@ int main(int argc, char **argv) {
         std::cin >> response;
         std::cin.ignore();
 
-        cli_process(response, my_databases);
+        error_status = cli_process(response, my_databases);
+        if (error_status)
+            break;
 
     } while(!(response == 'q' || response == 'Q'));
 

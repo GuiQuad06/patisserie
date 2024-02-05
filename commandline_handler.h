@@ -33,28 +33,28 @@ void cli_display(void);
 
 /** 
  * @brief Add a Recette
- * @return none
+ * @return int 0 if success, 1 if error
  */
-void cmd_add_recette(database_package_t &data);
+int cmd_add_recette(database_package_t &data);
 
 /**
  * @brief Add a Patisserie
- * @return none
+ * @return int 0 if success, 1 if error
  */
-void cmd_add_patisserie(database_package_t &data);
+int cmd_add_patisserie(database_package_t &data);
 
 /**
  * @brief Add a Commande
- * @return none
+ * @return int 0 if success, 1 if error
  */
-void cmd_add_commande(database_package_t &data);
+int cmd_add_commande(database_package_t &data);
 
 /** 
  * @brief Process the command line
  * @param c the command to process
  * @param databases the databases to process (3 vectors)
- * @return none
+ * @return int 0 if success, 1 if error
  */
-void cli_process(char c, database_package_t &databases);
+int cli_process(char c, database_package_t &databases);
 
 #endif // COMMANDLINE_HANDLER_H_
