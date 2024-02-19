@@ -57,4 +57,10 @@ int cmd_add_commande(database_package_t &data);
  */
 int cli_process(char c, database_package_t &databases);
 
+/**
+ * @brief Display the ASCII ART title
+ * @return none
+ */
+int cli_title(void);
+
 #endif // COMMANDLINE_HANDLER_H_

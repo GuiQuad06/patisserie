@@ -4,6 +4,11 @@
 
 #include "commandline_handler.h"
 
+#include <fstream>
+#include <stdio.h>
+
+#define MAX_LEN    (128u)
+
 /**
  * @brief Function pointer to handle the command line
  */
@@ -21,6 +26,8 @@ typedef struct {
     std::string cmd_help;
 
 } commandline_handler_t;
+
+static void print_image(std::ifstream& fptr);
 
 commandline_handler_t commandline_handlers[] = {
     {"1", cmd_add_recette, "Add a Recette"},
@@ -106,3 +113,34 @@ void cli_display(void)
         std::cout << '\t' << commandline_handlers[i].cmd_id << ") " << commandline_handlers[i].cmd_help.c_str() << '\n';
     }
 }
+
+int cli_title(void)
+{
+    // Open ASCII Title file in read mode
+    std::ifstream title_ascii_r("../macarons.txt", std::ios::in);
+
+    if (title_ascii_r.fail()) {
+        std::cerr << "Error opening macarons.txt file\n";
+        return 1;
+    }
+
+    print_image(title_ascii_r);
+
+    return 0;
+}
+
+static void print_image(std::ifstream& fptr)
+{
+    std::string read_string;
+
+    if(!fptr) {
+        std::cerr << "Impossible d'ouvrir le fichier\n";
+        return;
+    }
+    else {
+        while(std::getline(fptr, read_string)) {
+            std::cout << read_string;
+        }
+    }
+}
+
