@@ -4,6 +4,10 @@
 
 #include "commandline_handler.h"
 
+#include <stdio.h>
+
+#define MAX_LEN    (128u)
+
 /**
  * @brief Function pointer to handle the command line
  */
@@ -21,6 +25,8 @@ typedef struct {
     std::string cmd_help;
 
 } commandline_handler_t;
+
+static void print_image(FILE* fptr);
 
 commandline_handler_t commandline_handlers[] = {
     {"1", cmd_add_recette, "Add a Recette"},
@@ -106,3 +112,29 @@ void cli_display(void)
         std::cout << '\t' << commandline_handlers[i].cmd_id << ") " << commandline_handlers[i].cmd_help.c_str() << '\n';
     }
 }
+
+int cli_title(void)
+{
+    FILE *fptr = NULL;
+
+    if((fptr = fopen("image1.txt","r")) == NULL)
+    {
+        fprintf(stderr,"error opening file\n");
+        return 1;
+    }
+
+    print_image(fptr);
+
+    fclose(fptr);
+
+    return 0;
+}
+
+static void print_image(FILE* fptr)
+{
+    char read_string[MAX_LEN];
+
+    while(fgets(read_string,sizeof(read_string),fptr) != NULL)
+        printf("%s",read_string);
+}
+

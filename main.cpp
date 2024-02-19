@@ -52,6 +52,9 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    // CLI ASCII TITLE
+    cli_title();
+
     // CLI Handler Loop
     do {
         std::cout << "What would you like to do ?\n";
